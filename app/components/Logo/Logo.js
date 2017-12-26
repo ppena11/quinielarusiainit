@@ -5,7 +5,7 @@ import styles from './styles';
 
 const Logo = () => (
   <View style={styles.container}>
-    <Text style={styles.text}>La quiniela mas jugada en el mundo</Text>
+    <Text style={styles.text}>La quiniela más jugada en el mundo</Text>
     <Image
       resizeMode="contain"
       style={styles.containerImage}

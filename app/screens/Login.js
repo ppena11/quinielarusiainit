@@ -6,6 +6,7 @@ import { Container } from '../components/Container';
 
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
+import { Logo } from '../components/Logo';
 
 class Login extends Component {
   state = {
@@ -50,6 +51,7 @@ class Login extends Component {
     if (this.state.authenticating) {
       return (
         <View style={styles.form}>
+          <StatusBar translucent={false} barStyle="light-content" />
           <ActivityIndicator size="large" />
         </View>
       );
@@ -57,18 +59,20 @@ class Login extends Component {
 
     return (
       <View style={styles.form}>
+        <StatusBar translucent={false} barStyle="light-content" />
+        <Logo />
         <Input
-          placeholder="Enter your email..."
-          label="Email"
+          placeholder="Ingresa tu correo electrónico..."
+          label="Correo electrónico"
           onChangeText={email => this.setState({ email })}
         />
         <Input
           onChangeText={password => this.setState({ password })}
-          placeholder="Password"
-          label="Enter your password, please"
+          placeholder="Ingresa tu contraseña..."
+          label="Contraseña"
           secureTextEntry
         />
-        <Button onPress={() => this.onPressSingIn()}>Log in 1</Button>
+        <Button onPress={() => this.onPressSingIn()}>Entrar</Button>
       </View>
     );
   }
