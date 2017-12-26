@@ -1,0 +1,3 @@
+rootProject.name = 'QuinielaRusia3'
+
+include ':app'
