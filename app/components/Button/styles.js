@@ -2,7 +2,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
   button: {
-    marginTop: 20,
+    marginTop: 5,
     padding: 20,
     backgroundColor: '#00aeef',
     borderRadius: 4,

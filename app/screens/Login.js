@@ -47,6 +47,31 @@ class Login extends Component {
       });
   }
 
+  onPressCrearCuenta() {
+    this.setState({
+      authenticating: true,
+    });
+    console.log('hola mundo');
+    const auth = firebase.auth();
+    const emailAddress = this.state.email;
+
+    auth
+      .sendPasswordResetEmail(emailAddress)
+      .then(() => {
+        this.setState({
+          authenticating: false,
+        });
+        console.log('ques asdo'); // Email sent.
+      })
+      .catch((error) => {
+        // con An error happened.
+        this.setState({
+          authenticating: false,
+        });
+        console.log(error);
+      });
+  }
+
   renderCurrentState() {
     if (this.state.authenticating) {
       return (
@@ -73,6 +98,7 @@ class Login extends Component {
           secureTextEntry
         />
         <Button onPress={() => this.onPressSingIn()}>Entrar</Button>
+        <Button onPress={() => this.onPressCrearCuenta()}>Crear cuenta</Button>
       </View>
     );
   }
