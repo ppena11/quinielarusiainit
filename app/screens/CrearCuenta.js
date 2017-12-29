@@ -6,16 +6,16 @@ import { Container } from '../components/Container';
 
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-import { Logo } from '../components/Logo';
+// import { Logo } from '../components/Logo';
 import { TextIndication } from '../components/TextIndication';
 
-class Login extends Component {
+class CrearCuenta extends Component {
   state = {
-    email: '',
+    usuario: '',
     password: '',
+    email: '',
     authenticating: false,
     indication: '',
-    placeholder: 'Ingresa tu correo electrónico...',
   };
 
   componentWillMount() {
@@ -27,34 +27,35 @@ class Login extends Component {
       firebase.initializeApp(firebaseConfig);
     }
   }
-  onPressSingIn() {
+
+  onPressCrearCuenta() {
     this.setState({
       authenticating: true,
-      placeholder: 'Ingresa tu correo electrónico...',
+      indication: '',
     });
-
+    console.log('hola mundo');
     const auth = firebase.auth();
     const emailAddress = this.state.email;
     const password = this.state.password;
 
     auth
-      .signInWithEmailAndPassword(emailAddress, password)
+      .createUserWithEmailAndPassword(emailAddress, password)
       .then(() => {
         this.setState({
           authenticating: false,
         });
-        console.log('Logueado...'); // //logueado
+        console.log('Request para crear usuario enviado'); // Request sent.
       })
       .catch((error) => {
-        // con An error happened.
+        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
 
         switch (errorCode) {
-          case 'auth/user-disabled':
+          case 'auth/email-already-in-use':
             this.setState({
               authenticating: false,
-              indication: 'El correo electrónico ha sido deshabilitado',
+              indication: 'El correo electrónico no es válido, ya se encuentra registrado',
             });
             break;
           case 'auth/invalid-email':
@@ -63,19 +64,10 @@ class Login extends Component {
               indication: 'El correo electrónico no es válido',
             });
             break;
-          case 'auth/user-not-found':
+          case 'auth/weak-password':
             this.setState({
               authenticating: false,
-              indication: 'El correo electrónico no se encuentra registrado',
-            });
-            break;
-          case 'auth/wrong-password':
-            // this.inputCorreo.placeholder = emailAddress;
-
-            this.setState({
-              authenticating: false,
-              placeholder: emailAddress,
-              indication: 'La contraseña es incorrecta',
+              indication: 'El password debe tener al menos 6 carcacteres',
             });
             break;
           default:
@@ -86,32 +78,9 @@ class Login extends Component {
           // etc
         }
 
+        // ...
         console.log(errorMessage);
-      });
-  }
-
-  onPressCrearCuenta() {
-    this.setState({
-      authenticating: true,
-    });
-    console.log('hola mundo');
-    const auth = firebase.auth();
-    const emailAddress = this.state.email;
-
-    auth
-      .sendPasswordResetEmail(emailAddress)
-      .then(() => {
-        this.setState({
-          authenticating: false,
-        });
-        console.log('ques asdo'); // Email sent.
-      })
-      .catch((error) => {
-        // con An error happened.
-        this.setState({
-          authenticating: false,
-        });
-        console.log(error);
+        console.log(errorCode);
       });
   }
 
@@ -129,16 +98,20 @@ class Login extends Component {
       <View style={styles.form}>
         <StatusBar translucent={false} barStyle="light-content" />
         <KeyboardAvoidingView behavior="padding">
-          <Logo />
           <Input
-            placeholder={this.state.placeholder}
+            placeholder="Usuario"
+            label="Usuario"
+            onChangeText={usuario => this.setState({ usuario })}
+            autoCapitalize="none"
+            underlineColorAndroid="#4f6d7a"
+          />
+          <Input
+            placeholder="Ingresa tu correo electrónico..."
             label="Correo electrónico"
             onChangeText={email => this.setState({ email })}
             keyboardType="email-address"
             autoCapitalize="none"
-            ref={(input) => {
-              this.inputCorreo = input;
-            }}
+            underlineColorAndroid="#4f6d7a"
           />
           <Input
             onChangeText={password => this.setState({ password })}
@@ -146,8 +119,8 @@ class Login extends Component {
             label="Contraseña"
             secureTextEntry
             autoCapitalize="none"
+            underlineColorAndroid="#4f6d7a"
           />
-          <Button onPress={() => this.onPressSingIn()}>Entrar</Button>
           <Button onPress={() => this.onPressCrearCuenta()}>Crear cuenta</Button>
           <TextIndication description={this.state.indication} />
         </KeyboardAvoidingView>
@@ -165,4 +138,4 @@ const styles = EStyleSheet.create({
   },
 });
 
-export default Login;
+export default CrearCuenta;
