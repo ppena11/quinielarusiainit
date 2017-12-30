@@ -15,6 +15,8 @@ class Input extends Component {
       keyboardType,
       autoCapitalize,
       underlineColorAndroid,
+      onSubmitEditing,
+      focus,
     } = this.props;
     return (
       <View style={styles.container}>
@@ -29,6 +31,8 @@ class Input extends Component {
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
           underlineColorAndroid={underlineColorAndroid}
+          onSubmitEditing={onSubmitEditing}
+          focus={focus}
         />
       </View>
     );
@@ -44,6 +48,8 @@ Input.propTypes = {
   keyboardType: PropTypes.string,
   autoCapitalize: PropTypes.string,
   underlineColorAndroid: PropTypes.string,
+  onSubmitEditing: PropTypes.func,
+  focus: PropTypes.func,
 };
 
 export default Input;

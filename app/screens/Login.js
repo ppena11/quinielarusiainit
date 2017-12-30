@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, StatusBar, KeyboardAvoidingView } from 'react-native';
+import { ActivityIndicator, View, StatusBar, KeyboardAvoidingView, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import * as firebase from 'firebase';
 import { Container } from '../components/Container';
@@ -8,6 +8,7 @@ import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { Logo } from '../components/Logo';
 import { TextIndication } from '../components/TextIndication';
+import { RecuperarContrasena } from '../components/RecuperarContrasena';
 
 class Login extends Component {
   state = {
@@ -136,17 +137,21 @@ class Login extends Component {
             onChangeText={email => this.setState({ email })}
             keyboardType="email-address"
             autoCapitalize="none"
-            ref={(input) => {
-              this.inputCorreo = input;
-            }}
+            onSubmitEditing={() => console.log(this.inputCorreo)}
           />
           <Input
             onChangeText={password => this.setState({ password })}
             placeholder="Ingresa tu contraseña..."
-            label="Contraseña"
+            label="Contrasdfsdfdsfgseñassdasdsa"
             secureTextEntry
             autoCapitalize="none"
+            ref={(input) => {
+              this.inputCorreo = input;
+            }}
           />
+          <RecuperarContrasena>
+            <Text>Recuperar contraseña...</Text>
+          </RecuperarContrasena>
           <Button onPress={() => this.onPressSingIn()}>Entrar</Button>
           <Button onPress={() => this.onPressCrearCuenta()}>Crear cuenta</Button>
           <TextIndication description={this.state.indication} />
